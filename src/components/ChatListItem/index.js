@@ -1,24 +1,24 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 
-export default function ChatListItem() {
+export default function ChatListItem({ chat }) {
   return (
     <View style={styles.container}>
       <Image
         source={{
-          uri: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
+          uri: chat.user.image,
         }}
         style={styles.image}
       />
       <View style={styles.content}>
         <View style={styles.row}>
           <Text style={styles.name} numberOfLines={1}>
-            Lukas
+            {chat.user.name}
           </Text>
-          <Text style={styles.subTitle}>8:30</Text>
+          <Text style={styles.subTitle}>{chat.lastMessage.createdAt}</Text>
         </View>
         <Text style={styles.subTitle} numberOfLines={2}>
-          trolo
+          {chat.user.status}
         </Text>
       </View>
     </View>
