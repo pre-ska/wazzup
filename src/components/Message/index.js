@@ -12,7 +12,7 @@ const Message = ({ message }) => {
       style={[
         styles.container,
         {
-          backgroundColor: isMyMessage() ? 'green' : 'white',
+          backgroundColor: isMyMessage() ? '#DCF8C5' : 'white',
           alignSelf: isMyMessage() ? 'flex-end' : 'flex-start',
         },
       ]}
@@ -33,9 +33,28 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     maxWidth: '80%',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+
+    elevation: 2,
   },
   time: {
     color: 'gray',
     alignSelf: 'flex-end',
   },
 });
+
+const aaa = {
+  index: 12,
+  item: {
+    createdAt: '2022-10-03T14:53:00.000Z',
+    id: 'm13',
+    text: 'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in',
+    user: { id: 'u1', name: 'Vadim' },
+  },
+};
