@@ -18,7 +18,8 @@
     "user": {
       "id": "u3",
       "name": "Daniil Top",
-      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg"
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg",
+      "status": "Hey there!"
     },
     "lastMessage": {
       "id": "m2",
@@ -31,7 +32,8 @@
     "user": {
       "id": "u4",
       "name": "Alex",
-      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/8.png"
+      "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/8.png",
+      "status": "Hey there!"
     },
     "lastMessage": {
       "id": "m3",
