@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-wazzup-staging-174827-authRole",
+      "UnauthRoleArn": "arn:aws:iam::266353030132:role/amplify-wazzup-staging-174827-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::266353030132:role/amplify-wazzup-staging-174827-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-wazzup-staging-174827-deployment",
+      "UnauthRoleName": "amplify-wazzup-staging-174827-unauthRole",
+      "StackName": "amplify-wazzup-staging-174827",
+      "StackId": "arn:aws:cloudformation:us-east-1:266353030132:stack/amplify-wazzup-staging-174827/d8a232e0-7d69-11ed-9c88-12484d2aa231",
+      "AmplifyAppId": "d15c4j2mgw648t"
+    },
+    "categories": {
+      "auth": {
+        "Wazzup": {}
+      }
+    }
+  }
+}
