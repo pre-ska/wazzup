@@ -7,17 +7,36 @@ import {
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { createMessage, updateChatRoom } from '../../graphql/mutations';
 
-const InputBox = () => {
+const InputBox = ({ chatroom }) => {
   const [newMessage, setNewMessage] = useState('');
-  const onSend = (e) => {
-    console.log('sending new message', newMessage);
+  const onSend = async (e) => {
+    const authUser = await Auth.currentAuthenticatedUser();
+    const payload = {
+      chatroomID: chatroom.id,
+      text: newMessage,
+      userID: authUser.attributes.sub,
+    };
+
+    const newMessageData = await API.graphql(
+      graphqlOperation(createMessage, { input: payload })
+    );
+
     setNewMessage('');
+
+    API.graphql(
+      graphqlOperation(updateChatRoom, {
+        input: {
+          id: chatroom.id,
+          chatRoomLastMessageId: newMessageData.data?.createMessage?.id,
+          _version: chatroom._version,
+        },
+      })
+    );
   };
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    // >
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <View style={styles.container}>
         {/** Icon plus */}
@@ -41,7 +60,6 @@ const InputBox = () => {
         />
       </View>
     </SafeAreaView>
-    // </KeyboardAvoidingView>
   );
 };
 
