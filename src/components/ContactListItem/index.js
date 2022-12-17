@@ -3,14 +3,47 @@ import { useNavigation } from '@react-navigation/native';
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { createChatRoom, createUserChatRoom } from '../../graphql/mutations';
 
 dayjs.extend(relativeTime);
 
 const ContactListItem = ({ user }) => {
   const navigation = useNavigation();
 
+  const onPress = async () => {
+    console.warn('pressed');
+    // Create a new Chatroom
+    const newChatRoomData = await API.graphql(
+      graphqlOperation(createChatRoom, { input: {} })
+    );
+    console.log(newChatRoomData);
+    if (!newChatRoomData.data?.createChatRoom) {
+      console.log('Error creating the chat error');
+    }
+    const newChatRoom = newChatRoomData.data?.createChatRoom;
+
+    // // Add the clicked user to the ChatRoom
+    await API.graphql(
+      graphqlOperation(createUserChatRoom, {
+        input: { chatRoomID: newChatRoom.id, userID: user.id },
+      })
+    );
+
+    // Add the auth user to the ChatRoom
+    const authUser = await Auth.currentAuthenticatedUser();
+    await API.graphql(
+      graphqlOperation(createUserChatRoom, {
+        input: { chatRoomID: newChatRoom.id, userID: authUser.attributes.sub },
+      })
+    );
+
+    // navigate to the newly created ChatRoom
+    navigation.navigate('Chat', { id: newChatRoom.id });
+  };
+
   return (
-    <Pressable onPress={() => {}} style={styles.container}>
+    <Pressable onPress={onPress} style={styles.container}>
       <Image source={{ uri: user.image }} style={styles.image} />
 
       <View style={styles.content}>

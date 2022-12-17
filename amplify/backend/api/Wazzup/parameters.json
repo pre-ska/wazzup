@@ -1,5 +1,0 @@
-{
-  "AppSyncApiName": "Wazzup",
-  "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
-}
