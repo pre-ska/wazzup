@@ -25,7 +25,9 @@ const App = () => {
         console.log('user exists in DB');
         return;
       }
+
       console.log('stvaram novog usera');
+
       const newUser = {
         id: authUser?.attributes?.sub,
         name: authUser?.attributes?.phone_number,
@@ -38,7 +40,7 @@ const App = () => {
         })
       );
 
-      console.log(newUserResponse);
+      console.log('created user', newUserResponse);
     };
 
     syncUser();

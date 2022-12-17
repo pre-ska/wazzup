@@ -1,0 +1,15 @@
+projects:
+  wazzup2:
+    schemaPath: amplify/backend/api/wazzup2/build/schema.graphql
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql
+        region: us-east-1
+        apiId: null
+        maxDepth: 3

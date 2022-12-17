@@ -26,7 +26,7 @@ const ContactListItem = ({ user }) => {
     // // Add the clicked user to the ChatRoom
     await API.graphql(
       graphqlOperation(createUserChatRoom, {
-        input: { chatRoomID: newChatRoom.id, userID: user.id },
+        input: { chatRoomId: newChatRoom.id, userId: user.id },
       })
     );
 
@@ -34,7 +34,7 @@ const ContactListItem = ({ user }) => {
     const authUser = await Auth.currentAuthenticatedUser();
     await API.graphql(
       graphqlOperation(createUserChatRoom, {
-        input: { chatRoomID: newChatRoom.id, userID: authUser.attributes.sub },
+        input: { chatRoomId: newChatRoom.id, userId: authUser.attributes.sub },
       })
     );
 
