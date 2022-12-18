@@ -14,7 +14,6 @@ const ContactListItem = ({ user }) => {
 
   const onPress = async () => {
     const existingChatRoom = await getCommonChatRoomWithUser(user.id);
-    console.log(existingChatRoom);
     if (existingChatRoom) {
       navigation.navigate('Chat', { id: existingChatRoom.id });
       return;
@@ -23,7 +22,7 @@ const ContactListItem = ({ user }) => {
     const newChatRoomData = await API.graphql(
       graphqlOperation(createChatRoom, { input: {} })
     );
-    console.log(newChatRoomData);
+
     if (!newChatRoomData.data?.createChatRoom) {
       console.log('Error creating the chat error');
     }

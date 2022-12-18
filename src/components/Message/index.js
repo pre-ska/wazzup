@@ -10,7 +10,6 @@ const Message = ({ message }) => {
   const [isMe, setIsMe] = useState(false);
 
   useEffect(() => {
-    console.log(message);
     const isMyMessage = async () => {
       const authUser = await Auth.currentAuthenticatedUser();
       setIsMe(message.item.userID === authUser.attributes.sub);

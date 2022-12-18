@@ -12,6 +12,7 @@ import { createMessage, updateChatRoom } from '../../graphql/mutations';
 
 const InputBox = ({ chatroom }) => {
   const [newMessage, setNewMessage] = useState('');
+
   const onSend = async (e) => {
     const authUser = await Auth.currentAuthenticatedUser();
     const payload = {
@@ -36,6 +37,7 @@ const InputBox = ({ chatroom }) => {
       })
     );
   };
+
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <View style={styles.container}>

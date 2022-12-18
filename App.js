@@ -21,12 +21,7 @@ const App = () => {
         graphqlOperation(getUser, { id: authUser.attributes?.sub })
       );
 
-      if (userData?.data?.getUser) {
-        console.log('user exists in DB');
-        return;
-      }
-
-      console.log('stvaram novog usera');
+      if (userData?.data?.getUser) return;
 
       const newUser = {
         id: authUser?.attributes?.sub,
@@ -39,8 +34,6 @@ const App = () => {
           input: newUser,
         })
       );
-
-      console.log('created user', newUserResponse);
     };
 
     syncUser();

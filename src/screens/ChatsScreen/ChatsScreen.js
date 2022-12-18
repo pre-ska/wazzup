@@ -3,8 +3,6 @@ import { FlatList } from 'react-native';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 
 import ChatListItem from '../../components/ChatListItem';
-import chats from '../../../assets/data/chats.json';
-import { AppRegistry } from 'react-native-web';
 import { listChatRooms } from './queries';
 
 const ChatsScreens = () => {
@@ -17,9 +15,14 @@ const ChatsScreens = () => {
       const response = await API.graphql(
         graphqlOperation(listChatRooms, { id: authUser.attributes.sub })
       );
+      const rooms = response?.data?.getUser?.ChatRooms?.items;
 
+      const sortedRooms = rooms.sort(
+        (a, b) =>
+          new Date(b.chatRoom.updatedAt) - new Date(a.chatRoom.updatedAt)
+      );
       setChatRooms({
-        rooms: response?.data?.getUser?.ChatRooms?.items || [],
+        rooms: sortedRooms,
         authUser,
       });
     };

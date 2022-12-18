@@ -28,9 +28,11 @@ export default function ChatListItem({ chat, authUserSUB }) {
           <Text style={styles.name} numberOfLines={1}>
             {user?.name}
           </Text>
-          <Text style={styles.subTitle}>
-            {dayjs(chat.LastMessage?.createdAt).fromNow()}
-          </Text>
+          {chat.LastMessage && (
+            <Text style={styles.subTitle}>
+              {dayjs(chat.LastMessage?.createdAt).fromNow()}
+            </Text>
+          )}
         </View>
         <Text style={styles.subTitle} numberOfLines={2}>
           {chat.LastMessage?.text}

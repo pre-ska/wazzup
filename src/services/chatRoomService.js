@@ -3,7 +3,6 @@ import { API, Auth, graphqlOperation } from 'aws-amplify';
 export const getCommonChatRoomWithUser = async (userID) => {
   const authUser = await Auth.currentAuthenticatedUser();
   // get all chat rooms for user 1
-  console.log(authUser.attributes.sub);
   const response = await API.graphql(
     graphqlOperation(listChatRooms, {
       id: authUser.attributes.sub,
