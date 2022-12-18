@@ -4,6 +4,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import messages from '../../assets/data/messages.json';
@@ -13,10 +14,20 @@ import InputBox from '../components/InputBox';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { getChatRoom, listMessagesByChatRoom } from '../graphql/queries';
+import { onCreateMessage } from '../graphql/subscriptions';
+
+const getPlatform = () => {
+  if (Platform) {
+    return Platform.OS;
+  } else {
+    console.log(window.navigator.userAgent);
+  }
+};
 
 const ChatScreen = () => {
   const [chatRoom, setChatRoom] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [platform, setPlatform] = useState(getPlatform());
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -39,6 +50,21 @@ const ChatScreen = () => {
         sortDirection: 'DESC',
       })
     ).then((result) => setMessages(result.data?.listMessagesByChatRoom?.items));
+
+    //subscribe to new messages
+    const subscription = API.graphql(
+      graphqlOperation(onCreateMessage, {
+        filter: { chatroomID: { eq: chatroomID } },
+      })
+    ).subscribe({
+      next: ({ value }) => {
+        const newMessage = value.data?.onCreateMessage;
+        newMessage && setMessages((prev) => [newMessage, ...prev]);
+      },
+      error: (error) => console.warn(error),
+    });
+
+    return () => subscription.unsubscribe();
   }, [chatroomID]);
 
   //chat title
@@ -53,7 +79,7 @@ const ChatScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 190}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 90}
       style={styles.bg}
     >
       <ImageBackground source={bg} style={styles.bg}>
